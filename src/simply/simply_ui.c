@@ -230,9 +230,9 @@ static void show_welcome_text(SimplyUi *self) {
     return;
   }
 
-  simply_ui_set_text(self, UiTitle, "Pebble.js");
-  simply_ui_set_text(self, UiSubtitle, "Write apps with JS!");
-  simply_ui_set_text(self, UiBody, "pebble.github.io/pebblejs");
+  simply_ui_set_text(self, UiTitle, "Railslove Kickerapp");
+  simply_ui_set_text(self, UiSubtitle, "");
+  simply_ui_set_text(self, UiBody, "No connection to phone!");
 
   simply_window_stack_show(self->window.simply->window_stack, &self->window, true);
 }
