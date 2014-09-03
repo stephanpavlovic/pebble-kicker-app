@@ -128,12 +128,6 @@ function loadUserDetails(id){
     var body_string = user_details.number_of_wins + ' - ' + user_details.number_of_looses + '(' + user_details.percentage + ')';
     console.log(body_string);
     userDetailWindow.prop('body', body_string);
-    if(is_png(user_details.image)){
-      userDetailWindow.prop('icon', user_details.image);
-    }
-    else{
-      userDetailWindow.prop('icon', 'images/default_user.png')
-    }
   },
   function(data, status){
     console.log('error loading user', data, status);
