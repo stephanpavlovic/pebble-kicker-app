@@ -1,10 +1,7 @@
 var ajax = require('ajax');
 
 var League = function(name) {
-  this._name = name;
-  this._matches = [];
-  this._users = [];
-  this._active_user = {};
+
 };
 
 League.prototype.loadMatches = function(success, failure) {
@@ -60,6 +57,13 @@ League.prototype.loadUserDetails = function(id, success, failure) {
       failure(data, status);
     }
   );
+};
+
+League.prototype.init = function(new_name) {
+  this._name = new_name;
+  this._matches = [];
+  this._users = [];
+  this._active_user = {};
 };
 
 League.prototype.matches = function() {

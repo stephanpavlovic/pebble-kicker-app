@@ -1,7 +1,7 @@
 {
   "appKeys": {},
   "capabilities": [
-    ""
+    "configurable"
   ],
   "companyName": "stephan-pavlovic@gmx.de",
   "longName": "Pebble Kicker",

@@ -8,7 +8,27 @@ var UI = require('ui');
 var Vector2 = require('vector2');
 var ajax = require('ajax');
 var KickerAPI = require('kickerapi');
+var Settings = require('settings');
+Settings.option('league', 'railslove');
 
+Settings.config(
+  { url: 'http://kicker.railslove.com/pebble_settings' },
+  function(e) {
+    console.log('opening configurable');
+  },
+  function(e) {
+    console.log('closed configurable');
+
+    var new_options = JSON.stringify(e.options);
+    console.log("Settings.option('league')", Settings.option('league'));
+
+    if (e.failed) {
+      console.log('user canceled', e.response);
+    } else {
+      league.init( Settings.option('league') );
+    }
+  }
+);
 
 function setupMatchWindow(){
   var matchWindow = new UI.Window({
@@ -107,7 +127,9 @@ function setupUserDetailWindow(){
   return card;
 }
 
-var league = new KickerAPI.League('railslove');
+var league = new KickerAPI.League();
+league.init( Settings.option('league') );
+
 var matchWindow = setupMatchWindow();
 var rankingWindow = setupRankingWindow();
 var userDetailWindow = setupUserDetailWindow();
