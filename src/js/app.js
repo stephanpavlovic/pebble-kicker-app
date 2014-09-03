@@ -125,7 +125,7 @@ function loadUserDetails(id){
     console.log(user_details.name);
     userDetailWindow.prop('subtitle', user_details.quote + '');
     userDetailWindow.prop('title', user_details.name);
-    var body_string = user_details.number_of_wins + ' - ' user_details.number_of_looses + '(' + user_details.percentage + ')';
+    var body_string = user_details.number_of_wins + ' - ' + user_details.number_of_looses + '(' + user_details.percentage + ')';
     console.log(body_string);
     userDetailWindow.prop('body', body_string);
     if(is_png(user_details.image)){
