@@ -1,5 +1,7 @@
 var ajax = require('ajax');
 
+var API_URL = 'http://kicker.railslove.com/'
+
 var League = function(name) {
 
 };
@@ -7,11 +9,10 @@ var League = function(name) {
 League.prototype.loadMatches = function(success, failure) {
   console.log('loading matches from api...');
   var _this = this;
-  ajax({ url: 'http://kicker.railslove.com/'+this._name+'.json', type: 'json' },
+  ajax({ url: API_URL+this._name+'.json', type: 'json' },
     function(data, status) {
       console.log('loaded matches: ', data);
       if (data instanceof Array) {
-        console.log('loadMatches() this', this._matches);
         _this._matches = data;
         success();
       } else {
@@ -27,11 +28,10 @@ League.prototype.loadMatches = function(success, failure) {
 League.prototype.loadUsers = function(success, failure) {
   console.log('loading users from api...');
   var _this = this;
-  ajax({ url: 'http://kicker.railslove.com/'+this._name+'/users.json', type: 'json' },
+  ajax({ url: API_URL+this._name+'/users.json', type: 'json' },
     function(data, status) {
       console.log('loaded users: ', data);
       if (data instanceof Array) {
-        console.log('loadMatches() this', this._users);
         _this._users = data;
         success();
       } else {
@@ -47,7 +47,7 @@ League.prototype.loadUsers = function(success, failure) {
 League.prototype.loadUserDetails = function(id, success, failure) {
   console.log(id, 'loading user details from api...');
   var _this = this;
-  ajax({ url: 'http://kicker.railslove.com/'+this._name+'/users/' + id + '.json', type: 'json' },
+  ajax({ url: API_URL+this._name+'/users/' + id + '.json', type: 'json' },
     function(data, status) {
       console.log('loaded user details: ', data.name);
       _this._active_user = data;
