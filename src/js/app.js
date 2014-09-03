@@ -9,7 +9,6 @@ var Vector2 = require('vector2');
 var ajax = require('ajax');
 var KickerAPI = require('kickerapi');
 var Settings = require('settings');
-Settings.option('league', 'railslove');
 
 Settings.config(
   { url: 'http://kicker.railslove.com/pebble_settings' },
@@ -18,17 +17,38 @@ Settings.config(
   },
   function(e) {
     console.log('closed configurable');
-
-    var new_options = JSON.stringify(e.options);
-    console.log("Settings.option('league')", Settings.option('league'));
-
     if (e.failed) {
       console.log('user canceled', e.response);
     } else {
-      league.init( Settings.option('league') );
+      console.log('new options', JSON.stringify( Settings.option() ));
+      launchUI();
     }
   }
 );
+
+function setupMainMenu(){
+  var menu = new UI.Menu({
+    sections: [{
+      title: 'Railslove Kickerapp',
+      items: [{
+        title: 'Matches',
+        subtitle: 'All games'
+      }, {
+        title: 'Ranking',
+        subtitle: 'How do the users rank'
+      }]
+    }]
+  });
+  menu.on('select', function(e) {
+    if(e.itemIndex == 0){
+      loadMatches();
+    }
+    if(e.itemIndex == 1){
+      loadRanking();
+    }
+  });
+  return menu;
+}
 
 function setupMatchWindow(){
   var matchWindow = new UI.Window({
@@ -127,13 +147,6 @@ function setupUserDetailWindow(){
   return card;
 }
 
-var league = new KickerAPI.League();
-league.init( Settings.option('league') );
-
-var matchWindow = setupMatchWindow();
-var rankingWindow = setupRankingWindow();
-var userDetailWindow = setupUserDetailWindow();
-
 function loadMatches(){
   matchWindow.add(matchWindow.ui_elements.loadingText);
   matchWindow.currentMatchIndex = 0;
@@ -150,9 +163,12 @@ function loadMatches(){
 function loadRanking(){
   rankingWindow.show();
   league.loadUsers(function(){
-    console.log(league.users());
     rankingWindow.active_users = _.filter( league.users(), function(element){ return element.active; } );
-    rankingWindow.items(0, _.map( rankingWindow.active_users, function(user) { return { title: user.name, subtitle: user.quote }; }));
+    if(rankingWindow.active_users.length > 0){
+      rankingWindow.items(0, _.map( rankingWindow.active_users, function(user) { return { title: user.name, subtitle: user.quote }; }));
+    } else {
+      rankingWindow.items(0, [{ title: 'no active users' }]);
+    }
   },
   function(data, status){
     console.log('error loading users', data, status);
@@ -171,30 +187,6 @@ function loadUserDetails(id){
   },
   function(data, status){
     console.log('error loading user', data, status);
-  });
-}
-
-function renderMenu(){
-  var menu = new UI.Menu({
-    sections: [{
-      title: 'Railslove Kickerapp',
-      items: [{
-        title: 'Matches',
-        subtitle: 'All games'
-      }, {
-        title: 'Ranking',
-        subtitle: 'How do the users rank'
-      }]
-    }]
-  });
-  menu.show()
-  menu.on('select', function(e) {
-    if(e.itemIndex == 0){
-      loadMatches();
-    }
-    if(e.itemIndex == 1){
-      loadRanking();
-    }
   });
 }
 
@@ -235,4 +227,28 @@ function renderMatch(matchObj){
   matchWindow.ui_elements.score_text.prop('text', matchObj.score);
 }
 
-renderMenu();
+function launchUI(){
+  league.init( Settings.option('league') );
+  matchWindow.hide();
+  rankingWindow.hide();
+  userDetailWindow.hide();
+  mainMenu.show();
+}
+
+console.log('Starting app with options', JSON.stringify( Settings.option() ));
+
+if( Settings.option('league') == null ) {
+
+  var welcome_card = new UI.Card({title: 'Railslove Kickerapp', body: 'Open settings from the pebble app on your phone to select your league.'});
+  welcome_card.show();
+
+} else {
+
+  var league = new KickerAPI.League();
+  var matchWindow = setupMatchWindow();
+  var rankingWindow = setupRankingWindow();
+  var userDetailWindow = setupUserDetailWindow();
+  var mainMenu = setupMainMenu();
+  launchUI();
+
+}
