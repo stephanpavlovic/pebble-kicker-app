@@ -125,6 +125,9 @@ function loadUserDetails(id){
     console.log(user_details.name);
     userDetailWindow.prop('subtitle', user_details.quote + '');
     userDetailWindow.prop('title', user_details.name);
+    var body_string = user_details.number_of_wins + ' - ' user_details.number_of_looses + '(' + user_details.percentage + ')';
+    console.log(body_string);
+    userDetailWindow.prop('body', body_string);
     if(is_png(user_details.image)){
       userDetailWindow.prop('icon', user_details.image);
     }
@@ -158,20 +161,14 @@ function renderMenu(){
     if(e.itemIndex == 1){
       loadRanking();
     }
-    console.log('Selected item #' + e.itemIndex + ' of section #' + e.sectionIndex);
-    console.log('The item is titled "' + e.item.title + '"');
   });
 }
 
 function is_png(image_url){
-  console.log(image_url)
-  console.log(image_url.indexOf('.png'))
   return image_url.indexOf('.png') > 0
 }
 
 function renderMatch(matchObj){
-  console.log(matchObj);
-
   _.each(
     matchWindow.ui_elements.player_images,
     function(element, index, list){
