@@ -1,35 +1,61 @@
 {
-  "uuid": "133215f0-cf20-4c05-997b-3c9be5a64e5b",
-  "shortName": "Pebble.js",
-  "longName": "Pebble.js",
-  "companyName": "Meiguro",
-  "versionCode": 1,
-  "versionLabel": "0.4.0",
-  "capabilities": [ "configurable" ],
-  "watchapp": {
-    "watchface": false
-  },
   "appKeys": {},
+  "capabilities": [
+    ""
+  ],
+  "companyName": "stephan-pavlovic@gmx.de",
+  "longName": "Pebble Kicker",
+  "projectType": "pebblejs",
   "resources": {
     "media": [
       {
+        "file": "images/menu_icon.png",
         "menuIcon": true,
-        "type": "png",
         "name": "IMAGE_MENU_ICON",
-        "file": "images/menu_icon.png"
-      }, {
-        "type": "png",
+        "type": "png"
+      },
+      {
+        "file": "images/logo_splash.png",
         "name": "IMAGE_LOGO_SPLASH",
-        "file": "images/logo_splash.png"
-      }, {
-        "type": "png",
+        "type": "png"
+      },
+      {
+        "file": "images/tile_splash.png",
         "name": "IMAGE_TILE_SPLASH",
-        "file": "images/tile_splash.png"
-      }, {
-        "type": "font",
+        "type": "png"
+      },
+      {
+        "file": "fonts/UbuntuMono-Regular.ttf",
         "name": "MONO_FONT_14",
-        "file": "fonts/UbuntuMono-Regular.ttf"
+        "type": "font"
+      },
+      {
+        "file": "images/action_icon_up.png",
+        "name": "IMAGE_ACTION_ICON_UP",
+        "type": "png"
+      },
+      {
+        "file": "images/action_icon_down.png",
+        "name": "IMAGE_ACTION_ICON_DOWN",
+        "type": "png"
+      },
+      {
+        "file": "images/action_icon_reload.png",
+        "name": "ACTION_ICON_RELOAD",
+        "type": "png"
+      },
+      {
+        "file": "images/default_user.png",
+        "name": "IMAGE_DEFAULT_PROFILE",
+        "type": "png"
       }
     ]
+  },
+  "shortName": "Pebble Kicker",
+  "uuid": "777fe16c-fcb1-4d51-ac43-277770995602",
+  "versionCode": 1,
+  "versionLabel": "1.0",
+  "watchapp": {
+    "watchface": false
   }
 }
