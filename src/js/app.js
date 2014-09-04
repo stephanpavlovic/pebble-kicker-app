@@ -32,10 +32,12 @@ function setupMainMenu(){
       title: 'Railslove Kickerapp',
       items: [{
         title: 'Matches',
-        subtitle: 'All games'
+        subtitle: 'All games',
+        icon: 'images/icon_allmatches.png'
       }, {
         title: 'Ranking',
-        subtitle: 'How do the users rank'
+        subtitle: 'How do the users rank',
+        icon: 'images/icon_ranking.png'
       }]
     }]
   });
@@ -236,19 +238,24 @@ function launchUI(){
 }
 
 console.log('Starting app with options', JSON.stringify( Settings.option() ));
+var league = new KickerAPI.League();
+var matchWindow = setupMatchWindow();
+var rankingWindow = setupRankingWindow();
+var userDetailWindow = setupUserDetailWindow();
+var mainMenu = setupMainMenu();
+var welcome_card = new UI.Card({title: 'Railslove Kickerapp', body: 'Open settings from the pebble app on your phone to select your league.'});
 
-if( Settings.option('league') == null ) {
+var splashScreen = new UI.Card({ fullscreen: true, banner: 'images/splash.png' });
+splashScreen.show();
 
-  var welcome_card = new UI.Card({title: 'Railslove Kickerapp', body: 'Open settings from the pebble app on your phone to select your league.'});
-  welcome_card.show();
+setTimeout(function() {
 
-} else {
+  if( Settings.option('league') == null ) {
+    welcome_card.show();
+  } else {
+    launchUI();
+  }
+  splashScreen.hide();
 
-  var league = new KickerAPI.League();
-  var matchWindow = setupMatchWindow();
-  var rankingWindow = setupRankingWindow();
-  var userDetailWindow = setupUserDetailWindow();
-  var mainMenu = setupMainMenu();
-  launchUI();
+}, 3000);
 
-}

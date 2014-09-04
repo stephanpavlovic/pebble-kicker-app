@@ -15,8 +15,8 @@
         "type": "png"
       },
       {
-        "file": "images/logo_splash.png",
-        "name": "IMAGE_LOGO_SPLASH",
+        "file": "images/splash.png",
+        "name": "IMAGE_SPLASH",
         "type": "png"
       },
       {
@@ -47,6 +47,16 @@
       {
         "file": "images/default_user.png",
         "name": "IMAGE_DEFAULT_PROFILE",
+        "type": "png"
+      },
+      {
+        "file": "images/icon_ranking.png",
+        "name": "IMAGE_ICON_RANKING",
+        "type": "png"
+      },
+      {
+        "file": "images/icon_allmatches.png",
+        "name": "IMAGE_ICON_ALLMATCHES",
         "type": "png"
       }
     ]
