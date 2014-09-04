@@ -82,14 +82,14 @@ function setupMatchWindow(){
   matchWindow.ui_elements.score_rect = new UI.Rect({ position: new Vector2(  37 ,  72 ), size: new Vector2(70, 22), backgroundColor: 'clear', borderColor: 'white' });
   matchWindow.add(matchWindow.ui_elements.score_rect);
 
-  matchWindow.ui_elements.score_text = new UI.Text({ position: new Vector2(  0 ,  66 ), size: new Vector2(144, 32), font: 'gothic-24-bold', textAlign: 'center' });
+  matchWindow.ui_elements.score_text = new UI.Text({ position: new Vector2(  0 ,  66 ), size: new Vector2(144, 32), font: 'gothic-24-bold', textAlign: 'center', text: '' });
   matchWindow.add(matchWindow.ui_elements.score_text);
 
   matchWindow.ui_elements.player_names = [];
-  matchWindow.ui_elements.player_names[0] = new UI.Text({ position: new Vector2(  0 ,  15 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center' });
-  matchWindow.ui_elements.player_names[1] = new UI.Text({ position: new Vector2( 64 ,  15 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center' });
-  matchWindow.ui_elements.player_names[2] = new UI.Text({ position: new Vector2(  0 , 110 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center' });
-  matchWindow.ui_elements.player_names[3] = new UI.Text({ position: new Vector2( 64 , 110 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center' });
+  matchWindow.ui_elements.player_names[0] = new UI.Text({ position: new Vector2(  0 ,  15 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.player_names[1] = new UI.Text({ position: new Vector2( 64 ,  15 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.player_names[2] = new UI.Text({ position: new Vector2(  0 , 110 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.player_names[3] = new UI.Text({ position: new Vector2( 64 , 110 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
   _.each(
     matchWindow.ui_elements.player_names,
     function(element, index, list){
