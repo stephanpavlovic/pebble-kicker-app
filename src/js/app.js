@@ -9,6 +9,7 @@ var Vector2 = require('vector2');
 var ajax = require('ajax');
 var KickerAPI = require('kickerapi');
 var Settings = require('settings');
+var Vibe = require('ui/vibe');
 
 Settings.config(
   { url: 'http://kicker.railslove.com/pebble_settings' },
@@ -22,25 +23,13 @@ Settings.config(
     } else {
       console.log('new options', JSON.stringify( Settings.option() ));
       launchUI();
+      Vibe.vibrate('short');
     }
   }
 );
 
 function setupMainMenu(){
-  var menu = new UI.Menu({
-    sections: [{
-      title: 'Railslove Kickerapp',
-      items: [{
-        title: 'Matches',
-        subtitle: 'All games',
-        icon: 'images/icon_allmatches.png'
-      }, {
-        title: 'Ranking',
-        subtitle: 'How do the users rank',
-        icon: 'images/icon_ranking.png'
-      }]
-    }]
-  });
+  var menu = new UI.Menu();
   menu.on('select', function(e) {
     if(e.itemIndex == 0){
       loadMatches();
@@ -230,10 +219,24 @@ function renderMatch(matchObj){
 }
 
 function launchUI(){
-  league.init( Settings.option('league') );
+  league.init( Settings.option('league_slug') );
   matchWindow.hide();
   rankingWindow.hide();
   userDetailWindow.hide();
+  mainMenu.section(0,
+    {
+      title: Settings.option('league_name'),
+      items: [{
+        title: 'Matches',
+        subtitle: 'All games',
+        icon: 'images/icon_allmatches.png'
+      }, {
+        title: 'Ranking',
+        subtitle: 'How do the users rank',
+        icon: 'images/icon_ranking.png'
+      }]
+    }
+  );
   mainMenu.show();
 }
 
@@ -252,7 +255,7 @@ splashScreen.show();
 
 setTimeout(function() {
 
-  if( Settings.option('league') == null ) {
+  if( Settings.option('league_slug') == null ) {
     welcome_card.show();
   } else {
     launchUI();
@@ -260,4 +263,3 @@ setTimeout(function() {
   splashScreen.hide();
 
 }, 2000);
-
