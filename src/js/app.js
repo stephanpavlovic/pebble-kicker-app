@@ -245,7 +245,9 @@ var userDetailWindow = setupUserDetailWindow();
 var mainMenu = setupMainMenu();
 var welcome_card = new UI.Card({title: 'Railslove Kickerapp', body: 'Open settings from the pebble app on your phone to select your league.'});
 
-var splashScreen = new UI.Card({ fullscreen: true, banner: 'images/splash.png' });
+var splashScreen = new UI.Window({ fullscreen: true });
+var splash_image = new UI.Image({ position: new Vector2(0, 0), size: new Vector2(144, 168), image: 'images/splash.png' });
+splashScreen.add(splash_image);
 splashScreen.show();
 
 setTimeout(function() {
@@ -257,5 +259,5 @@ setTimeout(function() {
   }
   splashScreen.hide();
 
-}, 3000);
+}, 2000);
 
