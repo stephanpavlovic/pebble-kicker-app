@@ -66,6 +66,8 @@ function setupMatchWindow(){
     }
   );
 
+  matchWindow.ui_elements.crawling_image = new UI.Image({ position: new Vector2( 0 , 76 ), size: new Vector2(25, 16), image: 'images/crawling.png' });
+
   matchWindow.ui_elements.score_rect = new UI.Rect({ position: new Vector2(  26 ,  73 ), size: new Vector2(71, 22), backgroundColor: 'clear', borderColor: 'white' });
   matchWindow.add(matchWindow.ui_elements.score_rect);
 
@@ -185,6 +187,12 @@ function renderMatch(matchObj){
   matchWindow.ui_elements.player_names[3].prop('text', matchObj.looser_team[1].name);
 
   matchWindow.ui_elements.score_text.prop('text', matchObj.score);
+
+  if(matchObj.crawling){
+    matchWindow.add(matchWindow.ui_elements.crawling_image);
+  } else {
+    matchWindow.remove(matchWindow.ui_elements.crawling_image);
+  }
 }
 
 function launchUI(){

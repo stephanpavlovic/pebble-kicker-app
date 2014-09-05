@@ -63,6 +63,11 @@
         "file": "images/icon_allmatches.png",
         "name": "IMAGE_ICON_ALLMATCHES",
         "type": "png"
+      },
+      {
+        "file": "images/crawling.png",
+        "name": "IMAGE_CRAWLING",
+        "type": "png"
       }
     ]
   },
