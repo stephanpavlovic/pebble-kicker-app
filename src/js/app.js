@@ -54,7 +54,7 @@ function setupMatchWindow(){
 
   matchWindow.ui_elements = {};
 
-  matchWindow.ui_elements.loadingText = new UI.Text({ position: new Vector2(  26 ,  67 ), size: new Vector2(71, 32), font: 'gothic-24-bold', text: 'Loading...', textAlign: 'center' });
+  matchWindow.ui_elements.loadingText = new UI.Text({ position: new Vector2(  32 ,  73 ), size: new Vector2(60, 32), font: 'MONO_FONT_14', text: 'Loading', textAlign: 'center' });
 
   matchWindow.ui_elements.placeholder_images = [];
   matchWindow.ui_elements.placeholder_images[0] = new UI.Image({ position: new Vector2( 26 , 25 ), size: new Vector2(71, 40), image: 'images/winner_team.png' });
@@ -66,12 +66,12 @@ function setupMatchWindow(){
     }
   );
 
-  matchWindow.ui_elements.crawling_image = new UI.Image({ position: new Vector2( 0 , 76 ), size: new Vector2(25, 16), image: 'images/crawling.png' });
+  matchWindow.ui_elements.crawling_image = new UI.Image({ position: new Vector2( 4 , 76 ), size: new Vector2(25, 16), image: 'images/crawling.png' });
 
-  matchWindow.ui_elements.score_rect = new UI.Rect({ position: new Vector2(  26 ,  73 ), size: new Vector2(71, 22), backgroundColor: 'clear', borderColor: 'white' });
+  matchWindow.ui_elements.score_rect = new UI.Rect({ position: new Vector2(  32 ,  73 ), size: new Vector2(60, 22), backgroundColor: 'clear', borderColor: 'white' });
   matchWindow.add(matchWindow.ui_elements.score_rect);
 
-  matchWindow.ui_elements.score_text = new UI.Text({ position: new Vector2(  26 ,  67 ), size: new Vector2(71, 32), font: 'gothic-24-bold', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.score_text = new UI.Text({ position: new Vector2(  32 ,  67 ), size: new Vector2(60, 32), font: 'gothic-24-bold', textAlign: 'center', text: '' });
   matchWindow.add(matchWindow.ui_elements.score_text);
 
   matchWindow.ui_elements.player_names = [];
