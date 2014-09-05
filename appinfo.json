@@ -4,7 +4,7 @@
     "configurable"
   ],
   "companyName": "stephan-pavlovic@gmx.de",
-  "longName": "Pebble Kicker",
+  "longName": "Kicker App",
   "projectType": "pebblejs",
   "resources": {
     "media": [
@@ -66,7 +66,7 @@
       }
     ]
   },
-  "shortName": "Pebble Kicker",
+  "shortName": "Kicker App",
   "uuid": "777fe16c-fcb1-4d51-ac43-277770995602",
   "versionCode": 1,
   "versionLabel": "1.0",
