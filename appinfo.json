@@ -45,8 +45,13 @@
         "type": "png"
       },
       {
-        "file": "images/default_user.png",
-        "name": "IMAGE_DEFAULT_PROFILE",
+        "file": "images/winner_team.png",
+        "name": "IMAGE_WINNER_TEAM",
+        "type": "png"
+      },
+      {
+        "file": "images/looser_team.png",
+        "name": "IMAGE_LOOSER_TEAM",
         "type": "png"
       },
       {

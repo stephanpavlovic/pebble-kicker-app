@@ -54,13 +54,11 @@ function setupMatchWindow(){
 
   matchWindow.ui_elements = {};
 
-  matchWindow.ui_elements.loadingText = new UI.Text({ position: new Vector2(  0 ,  66 ), size: new Vector2(144, 32), font: 'gothic-24-bold', text: 'Loading...', textAlign: 'center' });
+  matchWindow.ui_elements.loadingText = new UI.Text({ position: new Vector2(  26 ,  67 ), size: new Vector2(71, 32), font: 'gothic-24-bold', text: 'Loading...', textAlign: 'center' });
 
   matchWindow.ui_elements.placeholder_images = [];
-  matchWindow.ui_elements.placeholder_images[0] = new UI.Image({ position: new Vector2( 0  , 5   ), size: new Vector2(60, 60), image: 'images/default_user.png' });
-  matchWindow.ui_elements.placeholder_images[1] = new UI.Image({ position: new Vector2( 64 , 5   ), size: new Vector2(60, 60), image: 'images/default_user.png' });
-  matchWindow.ui_elements.placeholder_images[2] = new UI.Image({ position: new Vector2( 0  , 100 ), size: new Vector2(60, 60), image: 'images/default_user.png' });
-  matchWindow.ui_elements.placeholder_images[3] = new UI.Image({ position: new Vector2( 64 , 100 ), size: new Vector2(60, 60), image: 'images/default_user.png' });
+  matchWindow.ui_elements.placeholder_images[0] = new UI.Image({ position: new Vector2( 26 , 25 ), size: new Vector2(71, 40), image: 'images/winner_team.png' });
+  matchWindow.ui_elements.placeholder_images[1] = new UI.Image({ position: new Vector2( 26 , 103 ), size: new Vector2(71, 40), image: 'images/looser_team.png' });
   _.each(
     matchWindow.ui_elements.placeholder_images,
     function(element, index, list){
@@ -68,29 +66,24 @@ function setupMatchWindow(){
     }
   );
 
-  matchWindow.ui_elements.score_rect = new UI.Rect({ position: new Vector2(  37 ,  72 ), size: new Vector2(70, 22), backgroundColor: 'clear', borderColor: 'white' });
+  matchWindow.ui_elements.score_rect = new UI.Rect({ position: new Vector2(  26 ,  73 ), size: new Vector2(71, 22), backgroundColor: 'clear', borderColor: 'white' });
   matchWindow.add(matchWindow.ui_elements.score_rect);
 
-  matchWindow.ui_elements.score_text = new UI.Text({ position: new Vector2(  0 ,  66 ), size: new Vector2(144, 32), font: 'gothic-24-bold', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.score_text = new UI.Text({ position: new Vector2(  26 ,  67 ), size: new Vector2(71, 32), font: 'gothic-24-bold', textAlign: 'center', text: '' });
   matchWindow.add(matchWindow.ui_elements.score_text);
 
   matchWindow.ui_elements.player_names = [];
-  matchWindow.ui_elements.player_names[0] = new UI.Text({ position: new Vector2(  0 ,  15 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
-  matchWindow.ui_elements.player_names[1] = new UI.Text({ position: new Vector2( 64 ,  15 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
-  matchWindow.ui_elements.player_names[2] = new UI.Text({ position: new Vector2(  0 , 110 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
-  matchWindow.ui_elements.player_names[3] = new UI.Text({ position: new Vector2( 64 , 110 ), size: new Vector2(60, 60), font: 'gothic-24-bold', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.player_names[0] = new UI.Text({ position: new Vector2(  0 ,  -3 ), size: new Vector2(62, 25), font: 'MONO_FONT_14', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.player_names[1] = new UI.Text({ position: new Vector2( 62 ,  -3 ), size: new Vector2(62, 25), font: 'MONO_FONT_14', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.player_names[2] = new UI.Text({ position: new Vector2(  0 , 140 ), size: new Vector2(62, 25), font: 'MONO_FONT_14', textAlign: 'center', text: '' });
+  matchWindow.ui_elements.player_names[3] = new UI.Text({ position: new Vector2( 62 , 140 ), size: new Vector2(62, 25), font: 'MONO_FONT_14', textAlign: 'center', text: '' });
+
   _.each(
     matchWindow.ui_elements.player_names,
     function(element, index, list){
       matchWindow.add(element);
     }
   );
-
-  matchWindow.ui_elements.player_images = [];
-  matchWindow.ui_elements.player_images[0] = new UI.Image({ position: new Vector2( 0  , 5   ), size: new Vector2(60, 60) });
-  matchWindow.ui_elements.player_images[1] = new UI.Image({ position: new Vector2( 64 , 5   ), size: new Vector2(60, 60) });
-  matchWindow.ui_elements.player_images[2] = new UI.Image({ position: new Vector2( 0  , 100 ), size: new Vector2(60, 60) });
-  matchWindow.ui_elements.player_images[3] = new UI.Image({ position: new Vector2( 64 , 100 ), size: new Vector2(60, 60) });
 
   matchWindow.currentMatchIndex = 0; //start with latest match
   matchWindow.on('click', 'up', function() {
@@ -186,34 +179,10 @@ function is_png(image_url){
 }
 
 function renderMatch(matchObj){
-  _.each(
-    matchWindow.ui_elements.player_images,
-    function(element, index, list){
-      matchWindow.remove(element);
-    }
-  );
-
-  if(is_png(matchObj.winner_team[0].image)){
-    matchWindow.ui_elements.player_images[0].prop('image', matchObj.winner_team[0].image);
-    matchWindow.add(matchWindow.ui_elements.player_images[0]);
-  }
-  if(is_png(matchObj.winner_team[1].image)){
-    matchWindow.ui_elements.player_images[1].prop('image', matchObj.winner_team[1].image);
-    matchWindow.add(matchWindow.ui_elements.player_images[1]);
-  }
-  if(is_png(matchObj.looser_team[0].image)){
-    matchWindow.ui_elements.player_images[2].prop('image', matchObj.looser_team[0].image);
-    matchWindow.add(matchWindow.ui_elements.player_images[2]);
-  }
-  if(is_png(matchObj.looser_team[1].image)){
-    matchWindow.ui_elements.player_images[3].prop('image', matchObj.looser_team[1].image);
-    matchWindow.add(matchWindow.ui_elements.player_images[3]);
-  }
-
-  matchWindow.ui_elements.player_names[0].prop('text', matchObj.winner_team[0].short_name);
-  matchWindow.ui_elements.player_names[1].prop('text', matchObj.winner_team[1].short_name);
-  matchWindow.ui_elements.player_names[2].prop('text', matchObj.looser_team[0].short_name);
-  matchWindow.ui_elements.player_names[3].prop('text', matchObj.looser_team[1].short_name);
+  matchWindow.ui_elements.player_names[0].prop('text', matchObj.winner_team[0].name);
+  matchWindow.ui_elements.player_names[1].prop('text', matchObj.winner_team[1].name);
+  matchWindow.ui_elements.player_names[2].prop('text', matchObj.looser_team[0].name);
+  matchWindow.ui_elements.player_names[3].prop('text', matchObj.looser_team[1].name);
 
   matchWindow.ui_elements.score_text.prop('text', matchObj.score);
 }
