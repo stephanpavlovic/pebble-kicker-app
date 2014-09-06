@@ -12,7 +12,7 @@ var Settings = require('settings');
 var Vibe = require('ui/vibe');
 
 Settings.config(
-  { url: 'http://kicker.railslove.com/pebble_settings' },
+  { url: 'http://kicker.cool/pebble_settings' },
   function(e) {
     console.log('opening configurable');
   },
