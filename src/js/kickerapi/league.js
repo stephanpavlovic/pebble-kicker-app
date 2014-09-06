@@ -1,6 +1,6 @@
 var ajax = require('ajax');
 
-var API_URL = 'http://kicker.railslove.com/'
+var API_URL = 'http://kicker.cool/'
 
 var League = function(name) {
 
