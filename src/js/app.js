@@ -58,7 +58,7 @@ function setupMatchWindow(){
 
   matchWindow.ui_elements.placeholder_images = [];
   matchWindow.ui_elements.placeholder_images[0] = new UI.Image({ position: new Vector2( 26 , 25 ), size: new Vector2(71, 40), image: 'images/winner_team.png' });
-  matchWindow.ui_elements.placeholder_images[1] = new UI.Image({ position: new Vector2( 26 , 103 ), size: new Vector2(71, 40), image: 'images/looser_team.png' });
+  matchWindow.ui_elements.placeholder_images[1] = new UI.Image({ position: new Vector2( 26 , 103 ), size: new Vector2(71, 40), image: 'images/loser_team.png' });
   _.each(
     matchWindow.ui_elements.placeholder_images,
     function(element, index, list){
@@ -151,7 +151,7 @@ function loadRanking(){
   league.loadUsers(function(){
     rankingWindow.active_users = _.filter( league.users(), function(element){ return element.active; } );
     if(rankingWindow.active_users.length > 0){
-      rankingWindow.items(0, _.map( rankingWindow.active_users, function(user) { return { title: user.name, subtitle: user.quote }; }));
+      rankingWindow.items(0, _.map( rankingWindow.active_users, function(user) { return { title: user.name, subtitle: user.quota }; }));
     } else {
       rankingWindow.items(0, [{ title: 'no active users' }]);
     }
@@ -165,9 +165,9 @@ function loadUserDetails(id){
   userDetailWindow.show();
   league.loadUserDetails(id, function(user_details){
     console.log(user_details.name);
-    userDetailWindow.prop('subtitle', user_details.quote + '');
+    userDetailWindow.prop('subtitle', user_details.quota + '');
     userDetailWindow.prop('title', user_details.name);
-    var body_string = user_details.number_of_wins + ' - ' + user_details.number_of_looses + ' (' + user_details.percentage + '%)';
+    var body_string = user_details.number_of_wins + ' - ' + user_details.number_of_losses + ' (' + user_details.percentage + '%)';
     console.log(body_string);
     userDetailWindow.prop('body', body_string);
   },
@@ -183,8 +183,8 @@ function is_png(image_url){
 function renderMatch(matchObj){
   matchWindow.ui_elements.player_names[0].prop('text', matchObj.winner_team[0].name);
   matchWindow.ui_elements.player_names[1].prop('text', matchObj.winner_team[1].name);
-  matchWindow.ui_elements.player_names[2].prop('text', matchObj.looser_team[0].name);
-  matchWindow.ui_elements.player_names[3].prop('text', matchObj.looser_team[1].name);
+  matchWindow.ui_elements.player_names[2].prop('text', matchObj.loser_team[0].name);
+  matchWindow.ui_elements.player_names[3].prop('text', matchObj.loser_team[1].name);
 
   matchWindow.ui_elements.score_text.prop('text', matchObj.score);
 
