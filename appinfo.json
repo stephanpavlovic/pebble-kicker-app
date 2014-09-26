@@ -74,7 +74,7 @@
   "shortName": "Kicker App",
   "uuid": "777fe16c-fcb1-4d51-ac43-277770995602",
   "versionCode": 1,
-  "versionLabel": "1.0",
+  "versionLabel": "1.1",
   "watchapp": {
     "watchface": false
   }
