@@ -230,11 +230,7 @@ static void show_welcome_text(SimplyUi *self) {
     return;
   }
 
-  simply_ui_set_text(self, UiTitle, "Railslove Kickerapp");
-  simply_ui_set_text(self, UiSubtitle, "");
-  simply_ui_set_text(self, UiBody, "No connection to phone!");
-
-  simply_window_stack_show(self->window.simply->window_stack, &self->window, true);
+  simply_msg_show_disconnected(self->window.simply->msg);
 }
 
 static void window_load(Window *window) {
