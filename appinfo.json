@@ -78,4 +78,9 @@
   "watchapp": {
     "watchface": false
   }
+  "targetPlatforms": [
+    "aplite",
+    "basalt"
+  ],
+  "sdkVersion": "3"
 }

@@ -1,5 +1,8 @@
 #include "simply_res.h"
 
+#include "util/color.h"
+#include "util/graphics.h"
+#include "util/memory.h"
 #include "util/window.h"
 
 #include <pebble.h>
@@ -10,8 +13,8 @@ static bool id_filter(List1Node *node, void *data) {
 
 static void destroy_image(SimplyRes *self, SimplyImage *image) {
   list1_remove(&self->images, &image->node);
-  free(image->bitmap.addr);
-  free(image);
+  gbitmap_destroy(image->bitmap);
+  free(image->palette);
 }
 
 static void destroy_font(SimplyRes *self, SimplyFont *font) {
@@ -20,7 +23,21 @@ static void destroy_font(SimplyRes *self, SimplyFont *font) {
   free(font);
 }
 
-GBitmap *simply_res_add_bundled_image(SimplyRes *self, uint32_t id) {
+static void setup_image(SimplyImage *image) {
+  image->is_palette_black_and_white = gbitmap_is_palette_black_and_white(image->bitmap);
+
+  if (!image->is_palette_black_and_white) {
+    return;
+  }
+
+  GColor8 *palette = gbitmap_get_palette(image->bitmap);
+  GColor8 *palette_copy = malloc0(2 * sizeof(GColor8));
+  memcpy(palette_copy, palette, 2 * sizeof(GColor8));
+  gbitmap_set_palette(image->bitmap, palette_copy, false);
+  image->palette = palette_copy;
+}
+
+SimplyImage *simply_res_add_bundled_image(SimplyRes *self, uint32_t id) {
   SimplyImage *image = malloc(sizeof(*image));
   if (!image) {
     return NULL;
@@ -34,21 +51,26 @@ GBitmap *simply_res_add_bundled_image(SimplyRes *self, uint32_t id) {
 
   *image = (SimplyImage) {
     .id = id,
-    .bitmap = *bitmap,
+    .bitmap = bitmap,
   };
 
   list1_prepend(&self->images, &image->node);
 
+  setup_image(image);
+
   window_stack_schedule_top_window_render();
 
-  return &image->bitmap;
+  return image;
 }
 
-GBitmap *simply_res_add_image(SimplyRes *self, uint32_t id, int16_t width, int16_t height, uint32_t *pixels) {
+SimplyImage *simply_res_add_image(SimplyRes *self, uint32_t id, int16_t width, int16_t height, uint8_t *pixels) {
   SimplyImage *image = (SimplyImage*) list1_find(self->images, id_filter, (void*)(uintptr_t) id);
+
   if (image) {
-    free(image->bitmap.addr);
-    image->bitmap.addr = NULL;
+    free(gbitmap_get_data(image->bitmap));
+    uint16_t row_size_bytes = gbitmap_get_bytes_per_row(image->bitmap);
+    gbitmap_set_data(image->bitmap, pixels, GBitmapFormat1Bit, row_size_bytes, true);
+    image->bitmap_data = pixels;
   } else {
     image = malloc(sizeof(*image));
     if (!image) {
@@ -56,21 +78,19 @@ GBitmap *simply_res_add_image(SimplyRes *self, uint32_t id, int16_t width, int16
     }
     *image = (SimplyImage) { .id = id };
     list1_prepend(&self->images, &image->node);
+
+    image->bitmap = gbitmap_create_blank(GSize(width, height), GBitmapFormat1Bit);
+    image->bitmap_data = gbitmap_get_data(image->bitmap);
+    uint16_t row_size_bytes = gbitmap_get_bytes_per_row(image->bitmap);
+    size_t pixels_size = height * row_size_bytes;
+    memcpy(image->bitmap_data, pixels, pixels_size);
+
+    setup_image(image);
   }
-
-  uint16_t row_size_bytes = (1 + (width - 1) / 32) * 4;
-  size_t pixels_size = height * row_size_bytes;
-  image->bitmap = (GBitmap) {
-    .row_size_bytes = row_size_bytes,
-    .bounds.size = { width, height },
-  };
-
-  image->bitmap.addr = malloc(pixels_size);
-  memcpy(image->bitmap.addr, pixels, pixels_size);
 
   window_stack_schedule_top_window_render();
 
-  return &image->bitmap;
+  return image;
 }
 
 void simply_res_remove_image(SimplyRes *self, uint32_t id) {
@@ -80,18 +100,18 @@ void simply_res_remove_image(SimplyRes *self, uint32_t id) {
   }
 }
 
-GBitmap *simply_res_auto_image(SimplyRes *self, uint32_t id, bool is_placeholder) {
+SimplyImage *simply_res_auto_image(SimplyRes *self, uint32_t id, bool is_placeholder) {
   if (!id) {
     return NULL;
   }
   SimplyImage *image = (SimplyImage*) list1_find(self->images, id_filter, (void*)(uintptr_t) id);
   if (image) {
-    return &image->bitmap;
+    return image;
   }
   if (id <= self->num_bundled_res) {
     return simply_res_add_bundled_image(self, id);
   }
-  if (!image && is_placeholder) {
+  if (is_placeholder) {
     return simply_res_add_image(self, id, 0, 0, NULL);
   }
   return NULL;
