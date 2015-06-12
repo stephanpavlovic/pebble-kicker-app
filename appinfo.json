@@ -77,7 +77,7 @@
   "versionLabel": "1.2",
   "watchapp": {
     "watchface": false
-  }
+  },
   "targetPlatforms": [
     "aplite",
     "basalt"
