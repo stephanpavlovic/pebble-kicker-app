@@ -22,6 +22,14 @@ Settings.config(
       console.log('user canceled', e.response);
     } else {
       console.log('new options', JSON.stringify( Settings.option() ));
+      Pebble.timelineSubscribe(Settings.option('league_slug'),
+        function () {
+          console.log('Subscribed to', Settings.option('league_slug'));
+        },
+        function (errorString) {
+          console.log('Error subscribing to topic: ' + errorString);
+        }
+      );
       launchUI();
       Vibe.vibrate('short');
     }
