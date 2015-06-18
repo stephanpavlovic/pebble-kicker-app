@@ -30,6 +30,14 @@ Settings.config(
           console.log('Error subscribing to topic: ' + errorString);
         }
       );
+      Pebble.getTimelineToken(
+        function (token) {
+          console.log('My timeline token is ' + token);
+        },
+        function (error) {
+          console.log('Error getting timeline token: ' + error);
+        }
+      );
       launchUI();
       Vibe.vibrate('short');
     }
