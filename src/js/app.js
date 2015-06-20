@@ -12,7 +12,7 @@ var Settings = require('settings');
 var Vibe = require('ui/vibe');
 
 Settings.config(
-  { url: 'http://kicker.cool/pebble_settings' },
+  { url: 'http://kicker.cool/pebble_settings?config=' + encodeURI(JSON.stringify(Settings.option())) },
   function(e) {
     console.log('opening configurable');
   },
@@ -22,22 +22,26 @@ Settings.config(
       console.log('user canceled', e.response);
     } else {
       console.log('new options', JSON.stringify( Settings.option() ));
-      Pebble.timelineSubscribe(Settings.option('league_slug'),
-        function () {
-          console.log('Subscribed to', Settings.option('league_slug'));
-        },
-        function (errorString) {
-          console.log('Error subscribing to topic: ' + errorString);
-        }
-      );
-      Pebble.getTimelineToken(
-        function (token) {
-          console.log('My timeline token is ' + token);
-        },
-        function (error) {
-          console.log('Error getting timeline token: ' + error);
-        }
-      );
+
+      if( Settings.option('receive_notifications') == '1' ){
+        Pebble.timelineSubscribe(Settings.option('league_slug'),
+          function () {
+            console.log('Subscribed to ' + Settings.option('league_slug'));
+          },
+          function (errorString) {
+            console.log('Error subscribing to topic: ' + errorString);
+          }
+        );
+      } else {
+        Pebble.timelineUnsubscribe(Settings.option('league_slug'),
+          function () {
+            console.log('Unsubscribed from ' + Settings.option('league_slug'));
+          },
+          function (errorString) {
+            console.log('Error unsubscribing from topic: ' + errorString);
+          }
+        );
+      }
       launchUI();
       Vibe.vibrate('short');
     }
